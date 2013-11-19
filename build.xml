@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HadonraImportTransactionBundle" default="build">
+    <target name="build" depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,atoum,behat"/>
+    <target name="build-parallel" depends="prepare,lint,tools-parallel,atoum,behat"/>
+    <target name="tools-parallel" description="Run tools in parallel">
+        <parallel threadCount="2">
+            <sequential>
+                <antcall target="pdepend"/>
+                <antcall target="phpmd-ci"/>
+            </sequential>
+            <antcall target="phpcpd"/>
+            <antcall target="phpcs-ci"/>
+            <antcall target="phploc"/>
+            <antcall target="phpDocumentor"/>
+        </parallel>
+    </target>
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/api"/>
+        <delete dir="${basedir}/build/code-browser"/>
+        <delete dir="${basedir}/build/coverage"/>
+        <delete dir="${basedir}/build/doc"/>
+        <delete dir="${basedir}/build/logs"/>
+        <delete dir="${basedir}/build/pdepend"/>
+        <delete dir="${basedir}/build/tmp/logs"/>
+        <delete dir="${basedir}/build/tmp/cache"/>
+        <delete dir="${basedir}/vendor"/>
+        <delete file="${basedir}/composer.phar"/>
+        <delete file="${basedir}/composer.lock"/>
+    </target>
+    <target name="prepare" depends="clean,composer" description="Prepare for build">
+        <mkdir dir="${basedir}/build/api"/>
+        <mkdir dir="${basedir}/build/code-browser"/>
+        <mkdir dir="${basedir}/build/coverage"/>
+        <mkdir dir="${basedir}/build/doc"/>
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/logs/behat"/>
+        <mkdir dir="${basedir}/build/pdepend"/>
+        <mkdir dir="${basedir}/build/tmp/logs"/>
+        <mkdir dir="${basedir}/build/tmp/cache"/>
+    </target>
+    <target name="composer" description="Installing dependencies">
+        <exec executable="wget" failonerror="true">
+            <arg value="-nc" />
+            <arg value="http://getcomposer.org/composer.phar" />
+        </exec>
+        <exec executable="php" failonerror="true">
+            <arg value="composer.phar" />
+            <arg value="install" />
+            <arg value="--dev" />
+        </exec>
+    </target>
+    <target name="lint">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
+            <fileset dir="${basedir}">
+                <exclude name="**/Resources/**" />
+                <exclude name="**/vendor/**" />
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+        </apply>
+    </target>
+    <target name="phploc" description="Measure project size using PHPLOC">
+        <exec executable="phploc">
+            <arg value="--exclude" />
+            <arg value="vendor" />
+            <arg value="--log-csv" />
+            <arg value="${basedir}/build/logs/phploc.csv" />
+            <arg path="${basedir}" />
+        </exec>
+    </target>
+    <target name="pdepend" description="Calculate software metrics using PHP_Depend">
+        <exec executable="pdepend">
+            <arg value="--summary-xml=${basedir}/build/logs/pdepend.xml" />
+            <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
+            <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
+            <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
+            <arg value="--ignore=vendor" />
+            <arg path="${basedir}" />
+        </exec>
+    </target>
+    <target name="phpmd" description="Perform project mess detection using PHPMD">
+        <exec executable="phpmd">
+            <arg path="${basedir}" />
+            <arg value="text" />
+            <arg value="${basedir}/build/phpmd.xml" />
+            <arg value="--exclude" />
+            <arg value="vendor" />
+        </exec>
+    </target>
+    <target name="phpmd-ci" description="Perform project mess detection using PHPMD">
+        <exec executable="phpmd">
+            <arg path="${basedir}" />
+            <arg value="xml" />
+            <arg value="codesize,unusedcode,design" />
+            <arg value="--reportfile" />
+            <arg value="${basedir}/build/logs/pmd.xml" />
+            <arg value="--exclude" />
+            <arg value="app,vendor,web" />
+        </exec>
+    </target>
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer">
+        <exec executable="phpcs">
+            <arg value="--ignore=vendor/**" />
+            <arg value="--extensions=php" />
+            <arg path="${basedir}" />
+        </exec>
+    </target>
+    <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer">
+        <exec executable="phpcs" output="/dev/null">
+            <arg value="--ignore=vendor/**,Tests/**,app/**,web/**,Resources/" />
+            <arg value="--extensions=php" />
+            <arg value="--report=checkstyle" />
+            <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+            <arg path="${basedir}" />
+        </exec>
+    </target>
+    <target name="phpcpd" description="Find duplicate code using PHPCPD">
+        <exec executable="phpcpd">
+            <arg value="--exclude" />
+            <arg value="vendor" />
+            <arg value="--log-pmd" />
+            <arg value="${basedir}/build/logs/pmd-cpd.xml" />
+            <arg path="${basedir}" />
+        </exec>
+    </target>
+    <target name="atoum" description="Run unit tests with Atoum">
+        <exec executable="vendor/bin/atoum" failonerror="false">
+            <arg line="--configurations .atoum.ci.php" />
+            <arg line="--bootstrap-file vendor/autoload.php" />
+            <arg line="--directories Tests/Units" />
+        </exec>
+    </target>
+    <target name="behat" description="Run behat tests">
+        <exec executable="vendor/bin/behat" failonerror="false">
+            <arg line="--config  behat.ci.yml" />
+            <arg line="--format progress,junit,html" />
+            <arg line="--out null,${basedir}/build/logs/behat/junit,${basedir}/build/logs/behat/report.html" />
+        </exec>
+    </target>
+</project>

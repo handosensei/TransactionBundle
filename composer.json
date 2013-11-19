@@ -1,0 +1,49 @@
+{
+    "name": "hadonra/import-transaction-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony bundle to import data by file (csv, xml, json) from bank",
+    "keywords": ["import data"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raldo Chea",
+            "email": "me@rchea.com",
+            "homepage": "http://rchea.com"
+        }
+    ],
+    "support": {
+        "email": "me@rchea.com"
+    },
+    "autoload": {
+        "psr-0": { "Hadonra\\Bundle\\ImportTransactionBundle": "" }
+    },
+    "target-dir": "Hadonra/Bundle/ImportTransactionBundle",
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:Hadonra/ImportTransactionBundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.4",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "1.2.*",
+        "knplabs/doctrine-behaviors": "dev-master",
+        "symfony/symfony": "2.3.*",
+        "sensio/framework-extra-bundle": "2.3.*"
+    },
+    "require-dev": {
+        "atoum/atoum-bundle": "dev-master",
+        "behat/symfony2-extension": "dev-master",
+        "behat/mink-extension": "dev-master",
+        "behat/mink-browserkit-driver": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "symfony/monolog-bundle": "2.3.*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
