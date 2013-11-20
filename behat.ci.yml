@@ -1,0 +1,23 @@
+default:
+  paths:
+    features: Features
+    bootstrap: %behat.paths.features%/Context
+  context:
+    class: Hadonra\Bundle\ImportTransactionBundle\Features\Context\FeatureContext
+  extensions:
+    Behat\Symfony2Extension\Extension:
+      mink_driver: true
+      kernel:
+        env: test
+        debug: true
+        path: Features/Fixtures/Project/app/AppKernel.php
+        bootstrap: Features/Fixtures/Project/app/bootstrap.php
+    Behat\MinkExtension\Extension:
+      base_url: 'http://localhost'
+      default_session: symfony2
+      show_cmd: open -a /Applications/Google\ Chrome.app %s
+
+debug:
+    context:
+        parameters:
+            exception_inbrowser: true
