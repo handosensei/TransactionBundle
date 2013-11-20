@@ -46,7 +46,7 @@ class Operation extends AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setAccountingAt(Date $accountingAt)
     {
@@ -54,7 +54,7 @@ class Operation extends AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAccountingAt()
     {

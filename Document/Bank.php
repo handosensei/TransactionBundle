@@ -40,7 +40,7 @@ class Bank implements BankInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getId()
     {
@@ -48,7 +48,7 @@ class Bank implements BankInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setName($name)
     {
@@ -58,7 +58,7 @@ class Bank implements BankInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -66,7 +66,7 @@ class Bank implements BankInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setCode($code)
     {
@@ -76,7 +76,7 @@ class Bank implements BankInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getCode()
     {
@@ -84,7 +84,7 @@ class Bank implements BankInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function addAccount(AccountInterface $account)
     {
@@ -94,7 +94,7 @@ class Bank implements BankInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAccounts()
     {

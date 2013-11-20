@@ -28,7 +28,7 @@ class Account implements AccountInterface
     protected $bank;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getId()
     {
@@ -36,7 +36,7 @@ class Account implements AccountInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setNumber($number)
     {
@@ -46,7 +46,7 @@ class Account implements AccountInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getNumber()
     {
@@ -54,7 +54,7 @@ class Account implements AccountInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setBank($bank)
     {
@@ -64,7 +64,7 @@ class Account implements AccountInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getBank()
     {

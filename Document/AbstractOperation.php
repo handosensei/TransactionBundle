@@ -42,7 +42,7 @@ abstract class AbstractOperation implements OperationInterface
     protected $amount;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getId()
     {
@@ -50,7 +50,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setAccountNumber($accountNumber)
     {
@@ -60,7 +60,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAccountNumber()
     {
@@ -68,7 +68,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setAmount($amount)
     {
@@ -78,7 +78,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAmount()
     {
@@ -86,7 +86,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setDescription($description)
     {
@@ -96,7 +96,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDescription()
     {
@@ -104,7 +104,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setReference($reference)
     {
@@ -114,7 +114,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getReference()
     {
@@ -122,7 +122,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setTransactionAt(Date $transactionAt)
     {
@@ -132,7 +132,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTransactionAt()
     {
