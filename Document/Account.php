@@ -4,6 +4,8 @@ namespace Hadonra\Bundle\TransactionBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Hadonra\Bundle\TransactionBundle\Model\Document\AccountInterface;
+use Hadonra\Bundle\TransactionBundle\Model\Document\BankInterface;
+use Hadonra\Bundle\TransactionBundle\Model\Document\OperationInterface;
 
 /**
  * @author Raldo CHEA <me@rchea.com>
@@ -23,9 +25,14 @@ class Account implements AccountInterface
     protected $number;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Bank", mappedBy="bank")
+     * @MongoDB\ReferenceOne(targetDocument="Bank", inversedBy="accounts")
      */
     protected $bank;
+
+    /**
+     * @MongoDB\ReferenceMany(targetDocument="Operation", mappedBy="account")
+     */
+    protected $operations;
 
     /**
      * {@inheritDoc}
@@ -56,9 +63,10 @@ class Account implements AccountInterface
     /**
      * {@inheritDoc}
      */
-    public function setBank($bank)
+    public function setBank(BankInterface $bank)
     {
         $this->bank = $bank;
+        $bank->addAccount($this);
 
         return $this;
     }
@@ -69,5 +77,23 @@ class Account implements AccountInterface
     public function getBank()
     {
         return $this->bank;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addOperation(OperationInterface $operation)
+    {
+        $this->operations[] = $operation;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOperations()
+    {
+        return $this->operations;
     }
 }

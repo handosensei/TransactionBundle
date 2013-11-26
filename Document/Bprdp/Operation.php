@@ -2,8 +2,9 @@
 
 namespace Hadonra\Bundle\TransactionBundle\Document\Bprdp;
 
-use \Date;
+use \Datetime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
 use Hadonra\Bundle\TransactionBundle\Model\Document\OperationInterface;
 use Hadonra\Bundle\TransactionBundle\Document\AbstractOperation;
 
@@ -12,25 +13,27 @@ use Hadonra\Bundle\TransactionBundle\Document\AbstractOperation;
  *
  * @author Raldo CHEA <me@rchea.com>
  *
- * @MongoDB\Document(repositoryClass="Hadonra\Bundle\TransactionBundle\Repository\Bprdp\OperationRepository")
+ * @MongoDB\Document(repositoryClass="Hadonra\Bundle\TransactionBundle\Repository\Document\Bprdp\OperationRepository")
  */
 class Operation extends AbstractOperation implements OperationInterface
 {
     /**
      * @MongoDB\Date
+     * @Assert\DateTime()
      */
     protected $accountingAt;
 
     /**
      * @MongoDB\Date
+     * @Assert\DateTime()
      */
     protected $valueAt;
 
     /**
-     * @param  Date               $valueAt
+     * @param  DateTime           $valueAt
      * @return OperationInterface
      */
-    public function setValueAt(Date $valueAt)
+    public function setValueAt(\DateTime $valueAt)
     {
         $this->valueAt = $valueAt;
 
@@ -38,7 +41,7 @@ class Operation extends AbstractOperation implements OperationInterface
     }
 
     /**
-     * @return Date
+     * @return DateTime
      */
     public function getValueAt()
     {
@@ -46,15 +49,18 @@ class Operation extends AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param  DateTime           $accountingAt
+     * @return OperationInterface
      */
-    public function setAccountingAt(Date $accountingAt)
+    public function setAccountingAt(\DateTime $accountingAt)
     {
         $this->accountingAt = $accountingAt;
+
+        return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * @return DateTime
      */
     public function getAccountingAt()
     {
