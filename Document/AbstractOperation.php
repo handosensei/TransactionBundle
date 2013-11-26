@@ -2,8 +2,10 @@
 
 namespace Hadonra\Bundle\TransactionBundle\Document;
 
-use \Date;
+use \DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
+use Hadonra\Bundle\TransactionBundle\Model\Document\AccountInterface;
 use Hadonra\Bundle\TransactionBundle\Model\Document\OperationInterface;
 
 /**
@@ -23,6 +25,7 @@ abstract class AbstractOperation implements OperationInterface
 
     /**
      * @MongoDB\Date
+     * @Assert\DateTime()
      */
     protected $transactionAt;
 
@@ -42,7 +45,12 @@ abstract class AbstractOperation implements OperationInterface
     protected $amount;
 
     /**
-     * {@inheritdoc}
+     * @MongoDB\ReferenceOne(targetDocument="Hadonra\Bundle\TransactionBundle\Document\Account", inversedBy="operations")
+     */
+    protected $account;
+
+    /**
+     * {@inheritDoc}
      */
     public function getId()
     {
@@ -50,7 +58,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setAccountNumber($accountNumber)
     {
@@ -60,7 +68,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAccountNumber()
     {
@@ -68,17 +76,17 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        $this->amount = (float) $amount;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAmount()
     {
@@ -86,7 +94,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setDescription($description)
     {
@@ -96,7 +104,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDescription()
     {
@@ -104,7 +112,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setReference($reference)
     {
@@ -114,7 +122,7 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getReference()
     {
@@ -122,9 +130,9 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function setTransactionAt(Date $transactionAt)
+    public function setTransactionAt(\DateTime $transactionAt)
     {
         $this->transactionAt = $transactionAt;
 
@@ -132,10 +140,29 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTransactionAt()
     {
         return $this->transactionAt;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAccount(AccountInterface $account)
+    {
+        $this->account = $account;
+        $account->addOperation($this);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAccount()
+    {
+        return $this->account;
     }
 }

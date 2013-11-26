@@ -4,6 +4,8 @@ namespace Hadonra\Bundle\TransactionBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Hadonra\Bundle\TransactionBundle\Model\Document\AccountInterface;
+use Hadonra\Bundle\TransactionBundle\Model\Document\BankInterface;
+use Hadonra\Bundle\TransactionBundle\Model\Document\OperationInterface;
 
 /**
  * @author Raldo CHEA <me@rchea.com>
@@ -23,12 +25,17 @@ class Account implements AccountInterface
     protected $number;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Bank", mappedBy="bank")
+     * @MongoDB\ReferenceOne(targetDocument="Bank", inversedBy="accounts")
      */
     protected $bank;
 
     /**
-     * {@inheritdoc}
+     * @MongoDB\ReferenceMany(targetDocument="Operation", mappedBy="account")
+     */
+    protected $operations;
+
+    /**
+     * {@inheritDoc}
      */
     public function getId()
     {
@@ -36,7 +43,7 @@ class Account implements AccountInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setNumber($number)
     {
@@ -46,7 +53,7 @@ class Account implements AccountInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getNumber()
     {
@@ -54,20 +61,39 @@ class Account implements AccountInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function setBank($bank)
+    public function setBank(BankInterface $bank)
     {
         $this->bank = $bank;
+        $bank->addAccount($this);
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getBank()
     {
         return $this->bank;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addOperation(OperationInterface $operation)
+    {
+        $this->operations[] = $operation;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOperations()
+    {
+        return $this->operations;
     }
 }

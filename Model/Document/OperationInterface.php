@@ -2,7 +2,7 @@
 
 namespace Hadonra\Bundle\TransactionBundle\Model\Document;
 
-use \Date;
+use \DateTime;
 
 /**
  * Interface OperationInterface
@@ -58,13 +58,13 @@ interface OperationInterface
     public function getReference();
 
     /**
-     * @param  \Date              $transactionAt
+     * @param  DateTime            $transactionAt
      * @return OperationInterface
      */
-    public function setTransactionAt(\Date $transactionAt);
+    public function setTransactionAt(\DateTime $transactionAt);
 
     /**
-     * @return \Date
+     * @return DateTime
      */
     public function getTransactionAt();
 }

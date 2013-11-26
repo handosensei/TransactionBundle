@@ -1,6 +1,6 @@
 <?php
 
-namespace Hadonra\Bundle\TransactionBundle\Repository;
+namespace Hadonra\Bundle\TransactionBundle\Repository\Document;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
