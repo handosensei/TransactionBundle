@@ -1,7 +1,7 @@
 {
-    "name": "hadonra/import-transaction-bundle",
+    "name": "hadonra/transaction-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony bundle to import data by file (csv, xml, json) from bank",
+    "description": "Import data by file (csv, xml, json) from personal bank",
     "keywords": ["import data"],
     "license": "MIT",
     "authors": [
@@ -15,35 +15,27 @@
         "email": "me@rchea.com"
     },
     "autoload": {
-        "psr-0": { "Hadonra\\Bundle\\ImportTransactionBundle": "" }
+        "psr-0": { "Hadonra\\Bundle\\TransactionBundle": "" }
     },
-    "target-dir": "Hadonra/Bundle/ImportTransactionBundle",
-    "minimum-stability": "dev",
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:Hadonra/ImportTransactionBundle.git"
-        }
-    ],
+    "target-dir": "Hadonra/Bundle/TransactionBundle",
     "require": {
-        "php": ">=5.4.4",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle": "1.2.*",
-        "knplabs/doctrine-behaviors": "dev-master",
-        "symfony/symfony": "2.3.*",
-        "sensio/framework-extra-bundle": "2.3.*"
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.4",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
+        "sensio/framework-extra-bundle": "~3.0"
     },
     "require-dev": {
-        "atoum/atoum-bundle": "dev-master",
-        "behat/symfony2-extension": "dev-master",
-        "behat/mink-extension": "dev-master",
-        "behat/mink-browserkit-driver": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "symfony/monolog-bundle": "2.3.*"
+        "behat/symfony2-extension": "*",
+        "atoum/atoum": "dev-master",
+        "atoum/atoum-bundle": "dev-master"
+    },
+    "config": {
+        "bin-dir": "bin"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "2.4-dev"
         }
     }
 }
